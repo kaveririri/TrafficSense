@@ -6,7 +6,7 @@ DATA_DIR = PROJECT_ROOT / "data"
 MODEL_DIR = PROJECT_ROOT / "models"
 ARTIFACT_DIR = PROJECT_ROOT / "artifacts"
 
-DEFAULT_DATASET = DATA_DIR / "Metro_Interstate_Traffic_Volume.csv"
+DEFAULT_DATASET = PROJECT_ROOT / "Metro_Interstate_Traffic_Volume.csv"
 
 MODEL_PATH = MODEL_DIR / "traffic_pipeline_holiday_corrected.joblib"
 METRICS_PATH = ARTIFACT_DIR / "holiday_corrected_app_metrics.json"
