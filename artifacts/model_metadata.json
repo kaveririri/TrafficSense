@@ -1,0 +1,29 @@
+{
+  "best_model": "HistGradientBoosting",
+  "split_cutoff": "2017-10-26 18:00:00",
+  "train_rows": 38331,
+  "test_rows": 9856,
+  "cleaned_rows": 48187,
+  "features": [
+    "temp",
+    "rain_1h",
+    "snow_1h",
+    "clouds_all",
+    "hour",
+    "day",
+    "month",
+    "day_of_week",
+    "is_weekend",
+    "hour_sin",
+    "hour_cos",
+    "day_sin",
+    "day_cos",
+    "holiday",
+    "weather_main",
+    "weather_description"
+  ],
+  "target_thresholds": {
+    "low_max": 2190.0,
+    "moderate_max": 4572.3333333333285
+  }
+}

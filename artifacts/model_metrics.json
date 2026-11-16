@@ -1,0 +1,23 @@
+[
+  {
+    "model":"HistGradientBoosting",
+    "MAE":263.4320146483,
+    "RMSE":452.7301322575,
+    "R2":0.9469740729,
+    "training_seconds":5.39
+  },
+  {
+    "model":"Random Forest",
+    "MAE":271.1089407528,
+    "RMSE":477.5704518729,
+    "R2":0.9409956044,
+    "training_seconds":8.56
+  },
+  {
+    "model":"Extra Trees",
+    "MAE":272.8905490088,
+    "RMSE":483.2089738592,
+    "R2":0.9395940872,
+    "training_seconds":7.07
+  }
+]

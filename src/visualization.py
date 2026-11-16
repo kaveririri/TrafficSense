@@ -1,19 +1,99 @@
+
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# Shared light editorial theme used by every chart in TrafficSense.
-DARK_LAYOUT = dict(template="plotly_white", paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(0,0,0,0)", font=dict(family="DM Sans, sans-serif", color="#263b34", size=13),
-    title=dict(font=dict(family="Manrope, sans-serif", size=18, color="#172b2a")),
-    margin=dict(l=24,r=24,t=56,b=24),
-    colorway=["#147D64", "#e0a34c", "#4b91a8", "#8a78b5", "#d47c70", "#6f9c79"],
-    xaxis=dict(showgrid=False,zeroline=False,linecolor="#dce6df"),
-    yaxis=dict(gridcolor="#e7eee9",zeroline=False,linecolor="#dce6df"),
-    legend=dict(bgcolor="rgba(0,0,0,0)",font=dict(color="#40564d")))
-LIGHT_LAYOUT = DARK_LAYOUT
 
-def line_chart(data,x,y,title,color=None):
-    fig=px.line(data,x=x,y=y,color=color,title=title); fig.update_layout(**DARK_LAYOUT); return fig
+def traffic_trend_chart(df):
+    """Display average traffic by hour."""
 
-def bar_chart(data,x,y,title,color=None):
-    fig=px.bar(data,x=x,y=y,color=color,title=title); fig.update_layout(**DARK_LAYOUT); return fig
+    hourly = (
+        df.groupby("hour", as_index=False)["traffic_volume"]
+        .mean()
+    )
+
+    fig = px.line(
+        hourly,
+        x="hour",
+        y="traffic_volume",
+        markers=True,
+        title="Average Traffic by Hour",
+        labels={
+            "hour": "Hour of Day",
+            "traffic_volume": "Average Vehicles per Hour",
+        },
+    )
+
+    fig.update_layout(template="plotly_dark")
+
+    return fig
+
+
+def weather_traffic_chart(df):
+    """Compare traffic volume across weather conditions."""
+
+    weather = (
+        df.groupby("weather_main", as_index=False)
+        ["traffic_volume"]
+        .mean()
+        .sort_values("traffic_volume", ascending=False)
+    )
+
+    fig = px.bar(
+        weather,
+        x="weather_main",
+        y="traffic_volume",
+        title="Average Traffic by Weather",
+        labels={
+            "weather_main": "Weather",
+            "traffic_volume": "Average Vehicles per Hour",
+        },
+    )
+
+    fig.update_layout(template="plotly_dark")
+
+    return fig
+
+
+def scenario_comparison_chart(results):
+    """Visualize scenario predictions."""
+
+    fig = px.bar(
+        results,
+        x="Scenario",
+        y="Predicted Traffic",
+        color="Scenario",
+        title="Scenario Traffic Comparison",
+        text="Predicted Traffic",
+    )
+
+    fig.update_layout(template="plotly_dark")
+
+    return fig
+
+
+def actual_vs_predicted_chart(actual, predicted):
+    """Compare actual and predicted traffic."""
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        y=list(actual),
+        mode="lines",
+        name="Actual Traffic",
+    ))
+
+    fig.add_trace(go.Scatter(
+        y=list(predicted),
+        mode="lines",
+        name="Predicted Traffic",
+    ))
+
+    fig.update_layout(
+        title="Actual vs Predicted Traffic",
+        xaxis_title="Test Observations",
+        yaxis_title="Vehicles per Hour",
+        template="plotly_dark",
+    )
+
+    return fig
